@@ -1,0 +1,22 @@
+{
+    "name": "Spots",
+    "version": "0.1.0",
+    "description": "sort of thesis work",
+    "main": "init.js",
+    "scripts": {
+        "test": "test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/AndreyPoznyak/Spots.git"
+    },
+    "keywords": [
+        "hotspots"
+    ],
+    "author": "Andrey Poznyak",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/AndreyPoznyak/Spots/issues"
+    },
+    "homepage": "https://github.com/AndreyPoznyak/Spots"
+}
