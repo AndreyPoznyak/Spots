@@ -15,6 +15,7 @@ var Coordinate = sequelize.define('Coordinate', {
 
 var Hotspot = sequelize.define('Hotspot', {
     name: Sequelize.STRING,
+    bssid: Sequelize.STRING,
     longitude: Sequelize.FLOAT(15, 12),
     latitude: Sequelize.FLOAT(15, 12),
     determined: Sequelize.BOOLEAN,
@@ -31,8 +32,8 @@ var User = sequelize.define('User', {
 Hotspot.hasMany(Coordinate);
 Coordinate.hasMany(Hotspot);
 
-User.hasMany(Hotspot);
 Hotspot.belongsTo(User);
+User.hasMany(Hotspot);
 
 exports.User = User;
 exports.Hotspot = Hotspot;
