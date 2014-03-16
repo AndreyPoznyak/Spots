@@ -1,14 +1,34 @@
-var db = require("./database");
+var db = require("./database"),
+    _ = require("lodash");
 
 var User = db.User,
     Hotspot = db.Hotspot,
     Coordinate = db.Coordinate;
 
 exports.fillTablesWithFakeData = function () {
-    createSomeData();
+    //createSomeData();
+    findSpotsLocation();
 };
 
-function createSomeData () {
+function findSpotsLocation () {   //TODO: calculate actual coordinates of spots
+    Hotspot.findAll({
+        where: "determined = 0"
+    }).success(function (spots) {
+            _.each(spots, function (spot) {
+                spot.getCoordinates().success(function (spotCoords) {
+                    if (spotCoords.length > 2) {
+                        spot.updateAttributes({
+                            determined: true
+                        }).success(function () {
+                                console.log("value updated!")
+                            });
+                    }
+                });
+            });
+        });
+};
+
+function createSomeData () {  //TODO: rewrite it using bulks: http://sequelizejs.com/docs/latest/instances#block-8-line-0
     var randomNumber = 0,
         index,
         spots = [],

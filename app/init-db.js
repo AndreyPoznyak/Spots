@@ -1,7 +1,7 @@
 var Q = require("q");
 
 var deferred = Q.defer(),
-    force = true;           //forcing the tables to be created from the beggining
+    force = false;           //forcing the tables to be created from the beggining
 
 exports.defineTables = function (sequelize) {
     sequelize.sync({ force: force }).complete(function(err) {
