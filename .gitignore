@@ -15,3 +15,7 @@ node_modules
 .idea/vcs.xml
 
 .idea/workspace.xml
+
+.idea/libraries/Spots_node_modules.xml
+
+.idea/jsLibraryMappings.xml

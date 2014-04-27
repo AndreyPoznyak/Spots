@@ -7,13 +7,11 @@
         "type": "git",
         "url": "https://github.com/AndreyPoznyak/Spots.git"
     },
-    "keywords": [
-        "hotspots"
-    ],
     "author": "Andrey Poznyak",
     "homepage": "https://github.com/AndreyPoznyak/Spots",
     "dependencies": {
         "sequelize": "1.7.0",
+        "restify": "2.6.3",
         "q": "2.0.0",
         "lodash": "2.4.1"
     }
