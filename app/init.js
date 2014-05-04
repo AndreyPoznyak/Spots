@@ -1,6 +1,6 @@
-var initDB = require("./init-db"),
-    db = require("./database"),
-    fillDB = require("./fill-test-db");
+var db = require("./database"),
+//fillDB = require("./fill-test-db"),//it contains examples of filling DB with relevant data
+    initService = require("./init-service");
 
 var sequelize = db.sequelize;
 
@@ -9,8 +9,9 @@ sequelize.authenticate().complete(function(err) {
         console.log('Unable to connect to the database: ', err)
     } else {
         console.log('Connection with database has been established successfully.')
-        initDB.defineTables(sequelize).then(function () {
-            fillDB.fillTablesWithFakeData();
+        db.defineTables().then(function () {
+            //fillDB.fillTablesWithFakeData();
+            initService.runService();
         });
     }
 });
