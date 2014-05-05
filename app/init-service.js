@@ -12,18 +12,32 @@ exports.runService = function () {
     server.post("/hotspot", function (request, response, next) {
         console.log("posting hotspot:");
         console.log(request.body);
-        dbActions.addHotSpot(JSON.parse(request.body));  //TODO: move it in one place in bodyParser
-        response.send("success");          //TODO: return more relevant data
+
+        //TODO: probably wait for operation result and then send response
+        var result = dbActions.addHotSpot(JSON.parse(request.body));  //TODO: move it in one place in bodyParser
+        response.send({
+            success: result
+        });
         return next();
     });
 
     server.get("/hotspots", function (request, response, next) {
         console.log("getting all hotspots");
-        response.send();
+        dbActions.getHotSpots().then(function (spots) {
+            response.send({
+                success: true,
+                spots: spots
+            });
+        }).fail(function () {
+            response.send({
+                success: false,
+                message: "No data found"
+            });
+        });
         return next();
     });
 
-    server.listen("8765", "192.168.1.7", function () {
+    server.listen("8765", "192.168.1.6", function () {
         console.log(server.name, " is listening at ", server.url);
     });
 }
