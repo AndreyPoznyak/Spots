@@ -28,7 +28,7 @@ exports.runService = function () {
                 success: true,
                 spots: spots
             });
-        }).fail(function () {
+        }, function () {
             response.send({
                 success: false,
                 message: "No data found"
@@ -37,7 +37,7 @@ exports.runService = function () {
         return next();
     });
 
-    server.listen("8765", "192.168.1.6", function () {
+    server.listen("8765", "192.168.1.7", function () {
         console.log(server.name, " is listening at ", server.url);
     });
 }
