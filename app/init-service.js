@@ -24,6 +24,7 @@ exports.runService = function () {
     server.get("/hotspots", function (request, response, next) {
         console.log("getting all hotspots");
         dbActions.getHotSpots().then(function (spots) {
+            console.log("sending " + spots.length + " spots")
             response.send({
                 success: true,
                 spots: spots
