@@ -7,7 +7,7 @@ var User = db.User,
     Coordinate = db.Coordinate;
 
 exports.addHotSpot = function (spot) {
-    if (spot && spot.name && spot.bssid && spot.longitude && spot.latitude) {
+    if (spot && spot.name && spot.bssid && spot.longitude && spot.latitude && spot.username) {
         Hotspot.find({
             where: {
                 bssid: spot.bssid
@@ -25,11 +25,14 @@ exports.addHotSpot = function (spot) {
                     if (error) {
                         console.log("Hotspot creation failed!")
                     } else {
-                        //createdSpot.setUser();
+                        checkSpotsUser(createdSpot, spot.username);//setting up relation to user
+                        addCoordinate(spot, createdSpot);  //setting up relation to coordinate
                     }
                 });
             } else {
-                console.log("This spot already exists in DB: ", spot.name);  //TODO: write this logic
+                console.log("This spot already exists in DB: ", spot.name);
+                addCoordinate(spot, foundSpot);
+                //TODO: count more precise position here
             }
         });
         return true;
@@ -63,4 +66,51 @@ exports.getHotSpots = function () {
     });
 
     return def.promise;
+};
+
+function checkSpotsUser(spot, user) {
+    User.find({
+        where: {
+            name: user
+        }
+    }).success(function (foundUser) {
+        if (!foundUser) {
+            User.create({
+                name: user
+            }).complete(function (error, createdUser) {
+                if (error) {
+                    console.log("New user wasn't added to table for some reason")
+                } else {
+                    spot.setUser(createdUser);
+                }
+            });
+        } else {
+            spot.setUser(foundUser);
+        }
+    });
+};
+
+function addCoordinate(coords, spot) {
+    Coordinate.find({
+        where: {
+            latitude: coords.latitude,
+            longitude: coords.longitude
+        }
+    }).success(function (foundCoordinate) {
+        if (foundCoordinate) {
+            console.log("Such coordinate already exists btw");
+            foundCoordinate.setHotspots([spot]);
+        } else {
+            Coordinate.create({
+                latitude: coords.latitude,
+                longitude: coords.longitude
+            }).complete(function (error, coordinate) {
+                if (error) {
+                    console.log("New coordinate wasn't added to table")
+                } else {
+                    coordinate.setHotspots([spot]);
+                }
+            });
+        }
+    });
 };

@@ -38,7 +38,7 @@ exports.runService = function () {
         return next();
     });
 
-    server.listen("8765", "192.168.1.7", function () {
+    server.listen("8765", "192.168.1.5", function () {
         console.log(server.name, " is listening at ", server.url);
     });
 }
